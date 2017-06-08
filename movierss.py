@@ -9,7 +9,7 @@ from logging.handlers import TimedRotatingFileHandler
 
 logging.basicConfig(format='[%(levelname)s] %(message)s', level=logging.DEBUG)
 
-list_id_re = re.compile(ur'ls\d+')
+list_id_re = re.compile(ur'ur\d+')
 movie_id_re = re.compile(ur'<link>.*?(tt\d+).*?</link>')
 movie_name_re = re.compile(ur'<title>(.*?)</title>')
 rss_header = '<?xml version="1.0" encoding="UTF-8"?>' \
@@ -33,7 +33,7 @@ def imdb_list_id(string):
 
 def get_watchlist(list_id):
     logging.info('Getting list %s', l)
-    res = urllib2.urlopen('http://rss.imdb.com/list/%s/' % list_id)
+    res = urllib2.urlopen('http://rss.imdb.com/user/%s/watchlist' % list_id)
     rss_content = res.read()
     movie_ids = movie_id_re.findall(rss_content)
     names = movie_name_re.findall(rss_content)
